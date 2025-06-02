@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Prueba de API con API Key</title>
+</head>
+<body>
+    <h1>Prueba de conexión a la API</h1>
+    <button onclick="llamarAPI()">Llamar API</button>
+    <pre id="resultado"></pre>
+
+    <script>
+        function llamarAPI() {
+            fetch('http://127.0.0.1:8000/api/usuarios/', {  // Cambia esta URL por la de tu API
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-API-KEY': 'ok8G9wPyU2FouLHR4n5vKu8rehSplu7vG0f3'  // Reemplaza con tu clave real
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Error en la solicitud: " + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('resultado').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('resultado').textContent = "Error: " + error.message;
+            });
+        }
+    </script>
+</body>
+</html>
