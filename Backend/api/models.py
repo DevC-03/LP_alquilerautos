@@ -1,7 +1,34 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser,BaseUserManager
 
+
+class UsuarioManager(BaseUserManager):
+    def create_user(self,username,email,password=None,**extra_fields):
+        #Creamos un usario en base a nombre de usuario, contraseña y correo
+        if not email:
+            raise ValueError('Correo es obligatorio')
+        email = self.normalize_email(email)
+        user = self.model(username=username,email=email,**extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+    
+    def create_superuser(self,username,email,password=None,**extra_fields):
+        #Creamos un superusario en base a nombre de usuario, contraseña y correo
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('El campo staff debe ser True')
+        
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('El campo superusuario debe ser True')
+        
+        return self.create_user(username,email,password,**extra_fields)
+    
 # ====================== MODELO USUARIO ======================
 class Usuario(models.Model):
+    objects = UsuarioManager()
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=128)

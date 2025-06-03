@@ -20,4 +20,5 @@ router.register('calificaciones', views.CalificacionViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('obtener-token/', views.Login.as_view(), name='token-auth')
 ]
