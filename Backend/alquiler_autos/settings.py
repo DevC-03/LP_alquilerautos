@@ -31,12 +31,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-#AUTH_USER_MODEL = 'api.Usuario'
-
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES' : ['rest_framework.authentication.TokenAuthentication'],
-    'DEFAULT_PERMISSION_CLASSES' : ['rest_framework.permissions.IsAuthenticated']
-}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -51,6 +45,7 @@ MIDDLEWARE = [
     'api.middleware.APIKeyMiddleware',
 ]
 
+API_KEY = 'ok8G9wPyU2FouLHR4n5vKu8rehSplu7vG0f3'
 
 CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:5500',
@@ -58,12 +53,32 @@ CORS_ALLOWED_ORIGINS = [
 ]
   
 CORS_ALLOW_HEADERS = [
+    'acept',
+    'accept-encoding',
+    'authorization',
     'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
     'x-csrftoken',
+    'x-requested-with',
     'X-API-KEY'
 ]
 
-API_KEY = 'ok8G9wPyU2FouLHR4n5vKu8rehSplu7vG0f3'
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+]
+
+AUTH_USER_MODEL = 'api.Usuario'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES' : ['rest_framework.authentication.TokenAuthentication'],
+    'DEFAULT_PERMISSION_CLASSES' : ['rest_framework.permissions.IsAuthenticated']
+}
 
 ROOT_URLCONF = 'alquiler_autos.urls'
 

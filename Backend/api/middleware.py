@@ -11,4 +11,4 @@ class APIKeyMiddleware:
         if api_key and api_key == settings.API_KEY:
             return self.get_response(request)
         
-        return JsonResponse({"error" : "API Key Inválida"},status=403)
+        return JsonResponse({"error" : "API Key Invalida"},status=403)
