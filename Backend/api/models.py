@@ -101,9 +101,8 @@ class Vehiculo(models.Model):
 
 class FotoVehiculo(models.Model):
     vehiculo = models.ForeignKey(Vehiculo, on_delete=models.CASCADE, related_name='fotos')
-    # imagen = models.ImageField(upload_to='vehiculos/')
+    imagen = models.ImageField(upload_to='vehiculos/', null=True, blank=True)
     es_principal = models.BooleanField(default=False)
-  
   
 # ====================== MODELOS DE ALQUILER ======================
 class Reserva(models.Model):
