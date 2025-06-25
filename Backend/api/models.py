@@ -31,7 +31,6 @@ class Usuario(AbstractUser):
     objects = UsuarioManager()
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(unique=True)
-    password = models.CharField(max_length=128)
     es_proveedor = models.BooleanField(default=False)
     
     def __str__(self):
