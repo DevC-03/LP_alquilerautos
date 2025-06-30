@@ -32,6 +32,7 @@ class ChoferSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class VehiculoSerializer(serializers.ModelSerializer):
+    propietario_vehiculo = serializers.CharField(source='propietario.usuario.username', read_only=True)
     class Meta:
         model = models.Vehiculo
         fields = '__all__'
@@ -44,6 +45,8 @@ class FotoVehiculoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ReservaSerializer(serializers.ModelSerializer):
+    cliente_reserva = serializers.CharField(source='cliente.usuario.username', read_only=True)
+    vehiculo_reserva = serializers.CharField(source='vehiculo.placa', read_only=True)
     class Meta:
         model = models.Reserva
         fields = '__all__'
