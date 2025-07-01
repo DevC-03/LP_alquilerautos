@@ -52,21 +52,25 @@ class ReservaSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ContratoSerializer(serializers.ModelSerializer):
+    contrato_reserva = serializers.CharField(source='reserva.cliente.usuario.username', read_only=True)
     class Meta:
         model = models.Contrato
         fields = '__all__'
 
 class PagoSerializer(serializers.ModelSerializer):
+    pago_contrato = serializers.CharField(source='contrato.reserva.cliente.usuario.username', read_only=True)
     class Meta:
         model = models.Pago
         fields = '__all__'
 
 class ReciboSerializer(serializers.ModelSerializer):
+    recibo_contrato = serializers.CharField(source='contrato.reserva.cliente.usuario.username', read_only=True)
     class Meta:
         model = models.Recibo
         fields = '__all__'
 
 class CalificacionSerializer(serializers.ModelSerializer):
+    calificacion_cliente = serializers.CharField(source='cliente.usuario.username', read_only=True)
     class Meta:
         model = models.Calificacion
         fields = '__all__'

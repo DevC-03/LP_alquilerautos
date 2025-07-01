@@ -133,7 +133,7 @@ class Contrato(models.Model):
     estado = models.CharField(max_length=50, default="VIGENTE")
     
     def __str__(self):
-        return f"Contrato #{self.id}"
+        return f"Contrato #{self.reserva.id}"
 
 class Pago(models.Model):
     contrato = models.ForeignKey(Contrato, on_delete=models.CASCADE)
