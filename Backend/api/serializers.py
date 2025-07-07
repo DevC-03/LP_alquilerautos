@@ -47,6 +47,7 @@ class FotoVehiculoSerializer(serializers.ModelSerializer):
 class ReservaSerializer(serializers.ModelSerializer):
     cliente_reserva = serializers.CharField(source='cliente.usuario.username', read_only=True)
     vehiculo_reserva = serializers.CharField(source='vehiculo.placa', read_only=True)
+    chofer_reserva = serializers.CharField(source='chofer.usuario.username', read_only=True, allow_null=True)
     class Meta:
         model = models.Reserva
         fields = '__all__'
