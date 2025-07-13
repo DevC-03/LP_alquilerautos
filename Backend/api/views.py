@@ -13,6 +13,10 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .serializers import UsuarioSerializer
 
+from .models import Usuario
+from rest_framework import status
+from rest_framework.permissions import AllowAny
+
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = models.Usuario.objects.all()
     serializer_class = serializers.UsuarioSerializer
@@ -92,6 +96,30 @@ class UsuarioActualView(APIView):
         data = UsuarioSerializer(user).data
         data['tipo_usuario'] = tipo_usuario
         return Response(data)
+
+class RegistroSimple(APIView):
+    permission_classes = [AllowAny]
+    
+    def post(self, request):
+        username = request.data.get("username")
+        email = request.data.get("email")
+        password = request.data.get("password")
+
+        if not username or not password:
+            return Response({"error": "Usuario y contraseña son requeridos"}, status=400)
+
+        if Usuario.objects.filter(username=username).exists():
+            return Response({"error": "El usuario ya existe"}, status=400)
+
+        user = Usuario.objects.create_user(username=username, email=email, password=password)
+        token, _ = Token.objects.get_or_create(user=user)
+
+        return Response({
+            "token": token.key,
+            "user_id": user.id,
+            "username": user.username
+        }, status=status.HTTP_201_CREATED)
+    
 # class Login(ObtainAuthToken):
 #     def post(self, request):
 #         username = request.data.get("username")

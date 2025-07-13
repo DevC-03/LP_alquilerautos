@@ -43,6 +43,7 @@ class Cliente(models.Model):
     apellido = models.CharField(max_length=50)
     fecha_nacimiento = models.DateField()
     licencia_conducir = models.CharField(max_length=20)
+    direccion = models.CharField(max_length=255, blank=True, null=True)
     telefono = models.CharField(max_length=15)
     reputacion = models.FloatField(default=5.0)
     

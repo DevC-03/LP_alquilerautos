@@ -21,5 +21,6 @@ router.register('calificaciones', views.CalificacionViewSet)
 urlpatterns = [
     path('',include(router.urls)),
     path('login/', views.Login.as_view(), name='login'),
+    path('registro/', views.RegistroSimple.as_view(), name='registro'),
     path('usuario-actual/', UsuarioActualView.as_view(), name='usuario-actual'),
 ]
