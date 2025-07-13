@@ -8,6 +8,11 @@ from rest_framework.authtoken.models import Token
 
 from django.contrib.auth import authenticate
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from .serializers import UsuarioSerializer
+
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = models.Usuario.objects.all()
     serializer_class = serializers.UsuarioSerializer
@@ -68,6 +73,25 @@ class Login(ObtainAuthToken):
             'username': user.username
         })
 
+class UsuarioActualView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        tipo_usuario = None
+
+        if hasattr(user, 'cliente'):
+            tipo_usuario = 'cliente'
+        elif hasattr(user, 'empleado'):
+            tipo_usuario = 'empleado'
+        elif hasattr(user, 'chofer'):
+            tipo_usuario = 'chofer'
+        elif hasattr(user, 'propietario'):
+            tipo_usuario = 'propietario'
+
+        data = UsuarioSerializer(user).data
+        data['tipo_usuario'] = tipo_usuario
+        return Response(data)
 # class Login(ObtainAuthToken):
 #     def post(self, request):
 #         username = request.data.get("username")
